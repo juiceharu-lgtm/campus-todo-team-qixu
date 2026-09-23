@@ -6,9 +6,16 @@ import java.util.Objects;
  * 校园待办任务。
  */
 public class Task {
+    public enum Priority {
+        HIGH,
+        MEDIUM,
+        LOW
+    }
+
     private final long id;
     private final String title;
     private boolean completed;
+    private Priority priority;
 
     public Task(long id, String title) {
         if (id <= 0) {
@@ -19,6 +26,7 @@ public class Task {
         }
         this.id = id;
         this.title = title.trim();
+        this.priority = Priority.MEDIUM;
     }
 
     public long getId() {
@@ -31,6 +39,14 @@ public class Task {
 
     public boolean isCompleted() {
         return completed;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
     }
 
     public void complete() {

@@ -21,4 +21,13 @@ public class TaskService {
     public List<Task> listAll() {
         return List.copyOf(tasks);
     }
+
+    public List<Task> filterByPriority(Task.Priority priority) {
+        if (priority == null) {
+            throw new IllegalArgumentException("任务优先级不能为空");
+        }
+        return tasks.stream()
+                .filter(task -> task.getPriority() == priority)
+                .toList();
+    }
 }
