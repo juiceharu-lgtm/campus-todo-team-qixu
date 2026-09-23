@@ -2,7 +2,9 @@ package edu.hbuas.campustodo.service;
 
 import edu.hbuas.campustodo.model.Task;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,7 +27,17 @@ class TaskServiceTest {
     void shouldRejectBlankTitle() {
         TaskService service = new TaskService();
         assertThrows(IllegalArgumentException.class,
-            () -> service.addTask(" "));
+                () -> service.addTask(" "));
+    }
+
+    @Test
+    void listAllShouldPreserveInsertionOrder() {
+        TaskService service = new TaskService();
+        Task first = service.addTask("第一个任务");
+        Task second = service.addTask("第二个任务");
+        Task third = service.addTask("第三个任务");
+
+        assertEquals(List.of(first, second, third), service.listAll());
     }
 
     // 1.正常完成任务
@@ -42,7 +54,7 @@ class TaskServiceTest {
     void shouldThrowWhenIdNotExist() {
         TaskService service = new TaskService();
         assertThrows(IllegalArgumentException.class,
-            () -> service.completeTask(999L));
+                () -> service.completeTask(999L));
     }
 
     //3.重复完成已完成任务抛出异常（实验必做！）
@@ -53,7 +65,7 @@ class TaskServiceTest {
         service.completeTask(task.getId());
         //第二次完成，需要抛出IllegalStateException
         assertThrows(IllegalStateException.class,
-            () -> service.completeTask(task.getId()));
+                () -> service.completeTask(task.getId()));
     }
 
     @Test
@@ -92,6 +104,6 @@ class TaskServiceTest {
         TaskService service = new TaskService();
 
         assertThrows(IllegalArgumentException.class,
-            () -> service.filterByPriority(null));
+                () -> service.filterByPriority(null));
     }
 }
