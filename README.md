@@ -65,3 +65,11 @@ git push origin v0.1.0
 - 作者不能批准自己的 Pull Request；评审意见处理完毕且 CI 通过后再合并。
 - 不提交 `.idea/`、`target/`、访问令牌、账号密码或个人隐私数据。
 - 禁止使用 `git push --force` 修改共享的 `main` 分支。
+
+## 7. 协作流程
+1. 开始工作前切换到 `main`，使用 `git pull --ff-only origin main` 同步远程更新。
+2. 按 Issue 创建独立分支，例如 `git switch -c feature/3-ci-guide`。
+3. 完成功能后运行 `mvn -B verify`，确认编译和测试全部通过。
+4. 使用规范的提交信息提交变更，并将功能分支推送到远程仓库。
+5. 创建以 `main` 为目标分支的 Pull Request，关联对应 Issue，并填写修改说明、测试证据和自检清单。
+6. 等待 CI 通过和其他成员评审，处理完评审意见后，由有权限的成员合并。
