@@ -66,8 +66,8 @@ public class TaskService {
         if (priority == null) {
             throw new IllegalArgumentException("任务优先级不能为空");
         }
-        return tasks.stream()
-                .filter(task -> task.getPriority() == priority)
-                .toList();
+        return taskStore.values().stream()
+            .filter(task -> task.getPriority() == priority)
+            .toList();
     }
 }

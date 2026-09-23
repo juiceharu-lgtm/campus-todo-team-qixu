@@ -2,17 +2,11 @@ package edu.hbuas.campustodo.service;
 
 import edu.hbuas.campustodo.model.Task;
 import org.junit.jupiter.api.Test;
-<<<<<<< HEAD
-import static org.junit.jupiter.api.Assertions.*;
-=======
-
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
->>>>>>> origin/main
 
 class TaskServiceTest {
 
@@ -98,6 +92,6 @@ class TaskServiceTest {
         TaskService service = new TaskService();
 
         assertThrows(IllegalArgumentException.class,
-                () -> service.filterByPriority(null));
+            () -> service.filterByPriority(null));
     }
 }
