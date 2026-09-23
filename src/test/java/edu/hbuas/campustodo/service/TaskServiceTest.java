@@ -15,7 +15,6 @@ class TaskServiceTest {
     @Test
     void shouldAddTask() {
         TaskService service = new TaskService();
-
         var task = service.addTask("完成需求评审");
 
         assertEquals(1L, task.getId());
@@ -27,9 +26,46 @@ class TaskServiceTest {
     @Test
     void shouldRejectBlankTitle() {
         TaskService service = new TaskService();
-
         assertThrows(IllegalArgumentException.class,
-                () -> service.addTask("   "));
+                () -> service.addTask(" "));
+    }
+
+    @Test
+    void listAllShouldPreserveInsertionOrder() {
+        TaskService service = new TaskService();
+        Task first = service.addTask("第一个任务");
+        Task second = service.addTask("第二个任务");
+        Task third = service.addTask("第三个任务");
+
+        assertEquals(List.of(first, second, third), service.listAll());
+    }
+
+    // 1.正常完成任务
+    @Test
+    void shouldCompleteTaskSuccess() {
+        TaskService service = new TaskService();
+        var task = service.addTask("写软件工程作业");
+        service.completeTask(task.getId());
+        assertTrue(task.isCompleted());
+    }
+
+    //2.不存在任务id抛出异常
+    @Test
+    void shouldThrowWhenIdNotExist() {
+        TaskService service = new TaskService();
+        assertThrows(IllegalArgumentException.class,
+                () -> service.completeTask(999L));
+    }
+
+    //3.重复完成已完成任务抛出异常（实验必做！）
+    @Test
+    void shouldThrowWhenCompleteAlreadyDoneTask() {
+        TaskService service = new TaskService();
+        var task = service.addTask("复习考试");
+        service.completeTask(task.getId());
+        //第二次完成，需要抛出IllegalStateException
+        assertThrows(IllegalStateException.class,
+                () -> service.completeTask(task.getId()));
     }
 
     @Test

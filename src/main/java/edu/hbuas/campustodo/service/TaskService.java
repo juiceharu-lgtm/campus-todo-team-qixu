@@ -22,6 +22,18 @@ public class TaskService {
         return List.copyOf(tasks);
     }
 
+    public Task completeTask(long taskId) {
+        Task task = tasks.stream()
+                .filter(candidate -> candidate.getId() == taskId)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("任务不存在"));
+        if (task.isCompleted()) {
+            throw new IllegalStateException("任务已经完成，不能再次完成");
+        }
+        task.complete();
+        return task;
+    }
+
     public List<Task> filterByPriority(Task.Priority priority) {
         if (priority == null) {
             throw new IllegalArgumentException("任务优先级不能为空");
