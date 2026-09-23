@@ -1,5 +1,4 @@
 package edu.hbuas.campustodo.service;
-
 import edu.hbuas.campustodo.model.Task;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -39,11 +38,9 @@ class TaskServiceTest {
         service.addTask("普通任务");
         Task t3 = service.addTask("低优先级任务");
         t3.setPriority(Task.Priority.LOW);
-
         List<Task> high = service.filterByPriority(Task.Priority.HIGH);
         List<Task> medium = service.filterByPriority(Task.Priority.MEDIUM);
         List<Task> low = service.filterByPriority(Task.Priority.LOW);
-
         assertEquals(1, high.size());
         assertEquals(1, medium.size());
         assertEquals(1, low.size());
@@ -55,5 +52,12 @@ class TaskServiceTest {
         service.addTask("普通任务");
         List<Task> highList = service.filterByPriority(Task.Priority.HIGH);
         assertTrue(highList.isEmpty());
+    }
+
+    // =========评审要求新增：传入null抛出异常的测试=========
+    @Test
+    void filterByPriorityNullShouldThrowException(){
+        TaskService service = new TaskService();
+        assertThrows(IllegalArgumentException.class, () -> service.filterByPriority(null));
     }
 }
